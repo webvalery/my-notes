@@ -5,8 +5,12 @@
     </template>
 
     <section class="profile-content">
-      asasaas
+      <app-button rounded fixed @click="handleClickNoteAdd">
+        <app-icon name="add" size="16"/>
+      </app-button>
     </section>
+
+    <add-note-modal v-model="isAddModalShown"/>
   </root-layout>
 </template>
 
@@ -14,14 +18,22 @@
 import RootLayout from 'layouts/RootLayout.vue'
 import AppMenu from 'modules/Menu/AppMenu.vue'
 
+import AppButton from 'components/Button/AppButton.vue'
+import AppIcon from 'components/Icon/AppIcon.vue'
+
+import AddNoteModal from './components/AddNoteModal.vue'
+
 export default {
   components: {
     RootLayout,
-    AppMenu
+    AppMenu,
+    AppButton,
+    AppIcon,
+    AddNoteModal
   },
   data () {
     return {
-
+      isAddModalShown: false
     }
   },
   computed: {
@@ -29,6 +41,9 @@ export default {
   },
   watch: {},
   methods: {
+    handleClickNoteAdd (e) {
+      this.isAddModalShown = true
+    }
   }
 }
 </script>

@@ -20,6 +20,10 @@ export default {
       type: Boolean,
       default: false
     },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
     color: {
       type: String,
       default: null
@@ -29,7 +33,8 @@ export default {
     classes () {
       return {
         disabled: this.disabled,
-        rounded: this.rounded
+        rounded: this.rounded,
+        fixed: this.fixed
       }
     },
     styles () {
@@ -86,6 +91,14 @@ export default {
   &.rounded {
     padding: 20px;
     border-radius: 100%;
+  }
+
+  &.fixed {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 10;
+    box-shadow: 0px 15px 46px -10px rgba(0, 0, 0, 0.6);
   }
 }
 </style>

@@ -16,7 +16,11 @@
       <div v-else class="app-menu-profile">
         <span class="user-info text-small">{{ email }}</span>
 
-        <div class="user-profile" :class="{ shown: isShownProfileMenu }" @click="handleClickProfile">
+        <div
+          class="user-profile"
+          :class="classesUserProfile"
+          @click="handleClickProfile"
+        >
           <app-icon name="user" width="20" height="28" />
 
           <div class="user-profile-dropdown">
@@ -50,10 +54,14 @@ export default {
     return {
       email: null,
       isShownProfileMenu: false,
+
       COLORS: COLORS
     }
   },
   computed: {
+    classesUserProfile () {
+      return { shown: this.isShownProfileMenu }
+    },
     isAuth () {
       return this.$store.getters['auth/token']
     }
@@ -156,5 +164,6 @@ export default {
 }
 .user-profile-exit {
   pointer-events: all;
+  user-select: none;
 }
 </style>
