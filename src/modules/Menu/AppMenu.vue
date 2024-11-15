@@ -4,7 +4,6 @@
       <img class="logo-image" src="@/assets/images/logo.svg" alt="logo">
     </div>
 
-    <router-link to="/">sdsd</router-link>
     <div class="actions">
       <app-button v-if="!isAuth" @click="handleClickLogin">
         <div class="login-icon">
@@ -39,10 +38,7 @@ export default {
   watch: {},
   methods: {
     handleClick (e) {
-      if (this.$route.path !== '/') {
-        this.$router.push({ path: '/' });
-      }
-      // this.$router.push({ path: '/' })
+      this.$router.push({ path: '/' })
     },
     handleClickLogin (e) {
       this.$emit('login', e)
