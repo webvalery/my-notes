@@ -3,7 +3,7 @@
     <div class="logo" @click="handleClick">
       <img class="logo-image" src="@/assets/images/logo.svg" alt="logo">
     </div>
-
+'привет'
     <div class="actions">
       <app-button v-if="!isAuth" @click="handleClickLogin">
         <div class="login-icon">
