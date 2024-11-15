@@ -3,6 +3,7 @@
     class="svg-icon"
     :style="stylesBuild"
     v-html="getSvgIcon(name)"
+    @click="handleClick"
   />
 </template>
 
@@ -39,6 +40,11 @@ export default {
         width: this.size ? `${this.size}px` : `${this.width}px`,
         height: this.size ? `${this.size}px` : `${this.height}px`
       }
+    }
+  },
+  methods: {
+    handleClick (e) {
+      this.$emit('click', e)
     }
   }
 }

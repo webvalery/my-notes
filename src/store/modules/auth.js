@@ -66,6 +66,23 @@ const actions = {
     } catch (error) {
       commit('SET_ERROR_MESSAGE', 'Произошла непредвиденная ошибка')
     }
+  },
+  async loadUserData ({ commit, getters }) {
+    try {
+      const response = await fetch(`${API_URL}/api/auth`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getters.token}`
+        }
+      })
+
+      const data = await response.json()
+
+      return { data, status: response.ok }
+    } catch (error) {
+      commit('SET_ERROR_MESSAGE', 'Произошла непредвиденная ошибка')
+    }
   }
 }
 

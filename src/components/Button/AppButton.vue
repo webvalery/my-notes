@@ -3,6 +3,7 @@
     class="app-button"
     :class="classes"
     @click="handleClick"
+    :style="styles"
   >
     <slot></slot>
   </button>
@@ -18,6 +19,10 @@ export default {
     rounded: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: null
     }
   },
   computed: {
@@ -25,6 +30,11 @@ export default {
       return {
         disabled: this.disabled,
         rounded: this.rounded
+      }
+    },
+    styles () {
+      return {
+        'background-color': this.color
       }
     }
   },
@@ -75,6 +85,7 @@ export default {
 
   &.rounded {
     padding: 20px;
+    border-radius: 100%;
   }
 }
 </style>
