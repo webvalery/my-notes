@@ -1,0 +1,60 @@
+@import 'styles/colors.less';
+
+.app-input-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: 36px;
+  margin-bottom: 8px;
+}
+.app-input-label {
+  display: block;
+  cursor: pointer;
+  color: @gray;
+  padding: 0 24px;
+  margin-bottom: 8px;
+  user-select: none;
+}
+.app-input-root {
+  width: 100%;
+  height: 72px;
+  padding: 0 26px;
+  color: @dark;
+  background-color: @white;
+  border-radius: 36px;
+  outline: none;
+  border: 2px solid transparent;
+
+  &:hover,
+  &:focus {
+    border: 2px solid @green-light;
+  }
+
+  &.visible-icon {
+    padding: 0 58px 0 26px;
+  }
+}
+.app-input-icon {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.app-input-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 24px;
+  user-select: none;
+}
+.app-input-message {
+  width: 100%;
+  color: #FF7461;
+  margin-right: 8px;
+}
+.app-input-char-counter {
+  color: @gray;
+  white-space: nowrap;
+}
