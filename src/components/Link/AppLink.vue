@@ -1,6 +1,6 @@
 <template>
   <a
-    class="app-link"
+    class="app-link text-small-bold"
     :href="url"
     :target="newWindow ? '_blank' : '_self'"
     @click="handleClickLink"
@@ -51,9 +51,6 @@ export default {
 @import 'styles/colors.less';
 
 .app-link {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 28px;
   color: @green-light;
   cursor: pointer;
   text-decoration: none;

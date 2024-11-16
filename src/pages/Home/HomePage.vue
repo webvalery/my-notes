@@ -34,10 +34,6 @@ export default {
       isAuthModalShown: false
     }
   },
-  computed: {
-
-  },
-  watch: {},
   methods: {
     handleLogin (e) {
       this.isAuthModalShown = true
@@ -50,12 +46,14 @@ export default {
 @import 'styles/colors.less';
 
 .home-content {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .home-info {
   position: relative;
+  margin-right: 10px;
 }
 .home-title {
   max-width: 480px;
@@ -67,15 +65,11 @@ export default {
 }
 .home-demo {
   width: 100%;
-  min-height: calc(100vh - 136px);
+  height: 100%;
   background-image: url('@/assets/images/home.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: right bottom;
-}
-
-@media (max-width: 1366px) {
-
 }
 
 @media (max-width: 768px) {
@@ -86,17 +80,24 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: unset;
   }
   .home-title,
   .home-description {
     text-align: center;
+  }
+  .home-title {
+    margin-bottom: 20px;
   }
   .home-demo {
     background-position: center bottom;
   }
 }
 
-@media (max-width: 360px) {
-
+@media (max-width: 520px) {
+  .home-title {
+    font-size: 60px;
+    line-height: 64px;
+  }
 }
 </style>

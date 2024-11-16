@@ -32,7 +32,7 @@
       </div>
 
       <div class="auth-offer">
-        <span class="auth-offer-text">
+        <span class="auth-offer-text text-small">
           {{ isSignIn ? 'У вас нет аккаунта?' : 'У вас есть аккаунт?'}}
 
           <app-link @click="handleClickLink">
@@ -103,6 +103,7 @@ export default {
   },
   methods: {
     handleClickLink (e) {
+      this.$store.commit('auth/SET_ERROR_MESSAGE', null)
       this.isSignIn = !this.isSignIn
     },
     async handleClickAuth (e) {
@@ -149,9 +150,6 @@ export default {
   margin-bottom: 20px;
 }
 .auth-offer-text {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 28px;
   color: @gray;
 }
 .auth-offer-error {

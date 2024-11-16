@@ -1,10 +1,14 @@
 <template>
   <div class="app-menu">
-    <div class="logo" @click="handleClick">
-      <img class="logo-image" src="@/assets/images/logo.svg" alt="logo">
-    </div>
+    <slot name="logo" :handleClickLogo="handleClickLogo">
+      <div class="logo" @click="handleClickLogo">
+        <img class="logo-image" src="@/assets/images/logo.svg" alt="logo">
+      </div>
+    </slot>
 
     <div class="actions">
+      <slot name="actions"></slot>
+
       <app-button v-if="!isAuth" @click="handleClickLogin">
         <div class="login-icon">
           <app-icon name="login" size="32"/>
@@ -17,11 +21,12 @@
         <span class="user-info text-small">{{ email }}</span>
 
         <div
+          ref="userProfile"
           class="user-profile"
           :class="classesUserProfile"
-          @click="handleClickProfile"
+          @click="handleToggleProfile"
         >
-          <app-icon name="user" width="20" height="28" />
+          <app-icon name="user" :width="widthIconUser" :height="heightIconUser" />
 
           <div class="user-profile-dropdown">
             <div class="user-profile-exit">
@@ -35,6 +40,7 @@
 </template>
 
 <script>
+import windowSizeMixin from '@/mixins/windowSizeMixin'
 import { COLORS } from 'styles/colors.js'
 
 import AppIcon from 'components/Icon/AppIcon.vue'
@@ -42,6 +48,7 @@ import AppButton from 'components/Button/AppButton.vue'
 import AppLink from 'components/Link/AppLink.vue'
 
 export default {
+  mixins: [windowSizeMixin],
   components: {
     AppIcon,
     AppButton,
@@ -62,8 +69,17 @@ export default {
     classesUserProfile () {
       return { shown: this.isShownProfileMenu }
     },
+    widthIconUser () {
+      return !this.isWidthWindowSmall ? '20' : '13'
+    },
+    heightIconUser () {
+      return !this.isWidthWindowSmall ? '28' : '18'
+    },
     isAuth () {
       return this.$store.getters['auth/token']
+    },
+    isWidthWindowSmall () {
+      return this.windowWidth <= 360
     }
   },
   methods: {
@@ -78,7 +94,7 @@ export default {
         throw new Error('Не удалось получить данные пользователя')
       }
     },
-    handleClick (e) {
+    handleClickLogo (e) {
       this.$router.push({ path: '/' })
     },
     handleClickLogin (e) {
@@ -86,6 +102,23 @@ export default {
     },
     handleClickProfile (e) {
       this.isShownProfileMenu = !this.isShownProfileMenu
+    },
+    handleToggleProfile (e) {
+      this.isShownProfileMenu = !this.isShownProfileMenu
+
+      if (this.isShownProfileMenu) {
+        document.addEventListener('click', this.handleClickOutside)
+      } else {
+        document.removeEventListener('click', this.handleClickOutside)
+      }
+    },
+    handleClickOutside (e) {
+      const userProfile = this.$refs.userProfile
+
+      if (userProfile && !userProfile.contains(e.target)) {
+        this.isShownProfileMenu = false
+        document.removeEventListener('click', this.handleClickOutside)
+      }
     },
     handleClickExit (e) {
       this.$store.commit('auth/SET_CLEAR_DATA')
@@ -99,7 +132,7 @@ export default {
 @import 'styles/colors.less';
 
 .app-menu {
-  height: 136px;
+  height: var(--height-app-menu, 136px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,6 +140,7 @@ export default {
 .logo {
   width: 219px;
   height: auto;
+  margin-right: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,10 +159,14 @@ export default {
   margin-right: 12px;
 }
 .app-menu-profile {
+  max-width: 300px;
   display: flex;
   align-items: center;
 }
 .user-info {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-right: 12px;
 }
 .user-profile {
@@ -137,6 +175,7 @@ export default {
   border-radius: 100%;
   background-color: @dark-middle;
   cursor: pointer;
+  user-select: none;
 }
 .user-profile-dropdown {
   position: absolute;
@@ -165,5 +204,26 @@ export default {
 .user-profile-exit {
   pointer-events: all;
   user-select: none;
+}
+
+@media (max-width: 1366px) {
+  .app-menu {
+    height: var(--height-app-menu, 96px);
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 360px) {
+  .logo {
+    width: 154px;
+  }
+  .app-menu-profile {
+    max-width: 200px;
+  }
+  .user-profile {
+    padding: 9px 12px;
+  }
 }
 </style>

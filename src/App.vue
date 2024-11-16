@@ -82,6 +82,9 @@ input, label, textarea {
 }
 
 @media (max-width: 360px) {
+  .container {
+    max-width: 340px;
+  }
   h1 {
     font-size: 60px;
     line-height: 64px;
@@ -90,8 +93,9 @@ input, label, textarea {
     font-size: 24px;
     line-height: 36px;
   }
-  .container {
-    max-width: 340px;
+  .text-small {
+    font-size: 14px;
+    line-height: 24px;
   }
 }
 </style>

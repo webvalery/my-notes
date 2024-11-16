@@ -20,5 +20,15 @@
 .root-layout {
   min-height: 100vh;
   background-color: @dark;
+
+  display: flex;
+  flex-direction: column;
+}
+.root-main {
+  display: flex;
+  flex: 1;
+}
+.container {
+  flex: 1;
 }
 </style>
