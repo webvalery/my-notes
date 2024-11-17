@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getSvgIcon } from 'utils/icons'
+import { getSvgIcon } from './loadIcons'
 
 export default {
   props: {

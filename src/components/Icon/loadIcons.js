@@ -1,7 +1,7 @@
 const svgResources = new Map()
 
 function loadIcons () {
-  const svgModules = require.context('../assets/icons', true, /\.svg$/)
+  const svgModules = require.context('assets/icons', true, /\.svg$/)
   svgModules.keys().forEach((fileName) => {
     const name = fileName.replace(/^.*[\\/]/, '').replace('.svg', '')
     svgResources.set(name, svgModules(fileName))

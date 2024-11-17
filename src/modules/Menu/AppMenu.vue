@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import windowSizeMixin from '@/mixins/windowSizeMixin'
+import windowSize from 'utils/windowSize.js'
 import { COLORS } from 'styles/colors.js'
 
 import AppIcon from 'components/Icon/AppIcon.vue'
@@ -48,7 +48,6 @@ import AppButton from 'components/Button/AppButton.vue'
 import AppLink from 'components/Link/AppLink.vue'
 
 export default {
-  mixins: [windowSizeMixin],
   components: {
     AppIcon,
     AppButton,
@@ -62,6 +61,7 @@ export default {
       email: null,
       isShownProfileMenu: false,
 
+      windowSize: windowSize,
       COLORS: COLORS
     }
   },
@@ -79,7 +79,7 @@ export default {
       return this.$store.getters['auth/token']
     },
     isWidthWindowSmall () {
-      return this.windowWidth <= 360
+      return this.windowSize.width <= 360
     }
   },
   methods: {
@@ -213,6 +213,9 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .user-profile-dropdown {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 360px) {

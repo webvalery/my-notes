@@ -89,11 +89,19 @@ input, label, textarea {
     font-size: 60px;
     line-height: 64px;
   }
+  h2 {
+    font-size: 32px;
+    line-height: 36px;
+  }
   h3 {
     font-size: 24px;
     line-height: 36px;
   }
   .text-small {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .text-small-bold {
     font-size: 14px;
     line-height: 24px;
   }

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import windowSizeMixin from '@/mixins/windowSizeMixin'
+import windowSize from 'utils/windowSize'
 
 import RootLayout from 'layouts/RootLayout.vue'
 import AppMenu from 'modules/Menu/AppMenu.vue'
@@ -39,7 +39,6 @@ import AppIcon from 'components/Icon/AppIcon.vue'
 import AddNoteModal from './components/AddNoteModal.vue'
 
 export default {
-  mixins: [windowSizeMixin],
   components: {
     RootLayout,
     AppMenu,
@@ -49,12 +48,13 @@ export default {
   },
   data () {
     return {
-      isAddModalShown: false
+      isAddModalShown: false,
+      windowSize: windowSize
     }
   },
   computed: {
     isWidthWindowSmall () {
-      return this.windowWidth <= 360
+      return this.windowSize.width <= 360
     }
   },
   watch: {},

@@ -119,4 +119,20 @@ export default {
   top: 20px;
   right: 20px;
 }
+
+@media (max-width: 1366px) {
+  .app-modal {
+    padding: 56px;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-modal {
+    padding: 90px 16px;
+  }
+  .app-modal-close {
+    top: 12px;
+    right: 12px;
+  }
+}
 </style>

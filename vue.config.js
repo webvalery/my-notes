@@ -22,13 +22,11 @@ module.exports = defineConfig({
   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg')
 
-    // Клонируем стандартное правило для использования file-loader для всех svg, кроме icons
     svgRule
       .test(/\.svg$/)
       .exclude.add(path.resolve(__dirname, 'src/assets/icons'))
       .end()
 
-    // Создаем новое правило для svg в папке icons, используя raw-loader
     config.module
       .rule('raw-svg')
       .test(/\.svg$/)

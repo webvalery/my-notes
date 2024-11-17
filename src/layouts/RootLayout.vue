@@ -20,7 +20,6 @@
 .root-layout {
   min-height: 100vh;
   background-color: @dark;
-
   display: flex;
   flex-direction: column;
 }

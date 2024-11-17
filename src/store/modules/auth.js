@@ -50,11 +50,7 @@ const actions = {
       const data = await response.json()
 
       if (!response.ok) {
-        const errorMessage = Array.isArray(data.message)
-          ? data.message.join('\n')
-          : data.message
-
-        commit('SET_ERROR_MESSAGE', errorMessage)
+        commit('SET_ERROR_MESSAGE', data.message)
       }
 
       if (data.accessToken) {

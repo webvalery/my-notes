@@ -32,25 +32,38 @@
       </div>
 
       <div class="auth-offer">
-        <span class="auth-offer-text text-small">
-          {{ isSignIn ? 'У вас нет аккаунта?' : 'У вас есть аккаунт?'}}
-
+        <span v-if="isSignIn" class="auth-offer-signup text text-small">
+          У вас нет аккаунта?
           <app-link @click="handleClickLink">
-            {{ isSignIn ? 'Зарегистрируйтесь?' : 'Войдите'}}
+            Зарегистрируйтесь
           </app-link>
         </span>
 
-        <app-button @click="handleClickAuth">
-          {{ isSignIn ? 'Войти' : 'Зарегистрироваться'}}
-        </app-button>
+        <span v-else class="auth-offer-signin text text-small">
+          У вас есть аккаунт?
+          <app-link @click="handleClickLink">
+            Войдите
+          </app-link>
+        </span>
+
+        <div class="auth-button-container">
+          <app-button
+            :block="isWidthWindowSmall"
+            @click="handleClickAuth"
+          >
+            {{ isSignIn ? 'Войти' : 'Зарегистрироваться'}}
+          </app-button>
+        </div>
       </div>
 
-      <p v-if="isError" class="auth-offer-error" v-html="message" />
+      <p v-if="isError" class="auth-offer-error text-small" v-html="message" />
     </div>
   </app-modal>
 </template>
 
 <script>
+import windowSize from 'utils/windowSize'
+
 import AppModal from 'components/Modal/AppModal.vue'
 import AppInput from 'components/Input/AppInput.vue'
 import AppLink from 'components/Link/AppLink.vue'
@@ -69,6 +82,36 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      shown: false,
+      isSignIn: true,
+      email: null,
+      password: null,
+      confirmPassword: null,
+      windowSize: windowSize
+    }
+  },
+  computed: {
+    title () {
+      return this.isSignIn ? 'Вход в ваш аккаунт' : 'Регистрация'
+    },
+    message () {
+      const errors = this.$store.getters['auth/error']
+
+      if (Array.isArray(errors)) {
+        return errors.join('<br>')
+      }
+
+      return errors
+    },
+    isError () {
+      return this.message !== null && this.message.trim() !== ''
+    },
+    isWidthWindowSmall () {
+      return this.windowSize.width <= 360
+    }
+  },
   watch: {
     value: {
       immediate: true,
@@ -79,26 +122,6 @@ export default {
     shown (val) {
       this.isSignIn = true
       this.$emit('input', val)
-    }
-  },
-  data () {
-    return {
-      shown: false,
-      isSignIn: true,
-      email: null,
-      password: null,
-      confirmPassword: null
-    }
-  },
-  computed: {
-    title () {
-      return this.isSignIn ? 'Вход в ваш аккаунт' : 'Регистрация'
-    },
-    message () {
-      return this.$store.getters['auth/error']
-    },
-    isError () {
-      return this.message !== null && this.message.trim() !== ''
     }
   },
   methods: {
@@ -147,15 +170,59 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
-.auth-offer-text {
+.auth-offer-signup,
+.auth-offer-signin {
   color: @gray;
 }
 .auth-offer-error {
   color: #FF7461;
   background-color: #FF74611A;
   padding: 8px 20px;
+  margin-top: 20px;
   border-radius: 24px;
+}
+
+@media (max-width: 1366px) {
+  .auth-title {
+    max-width: 400px;
+  }
+  .auth-offer-signup {
+    display: flex;
+    flex-direction: column
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-title {
+    max-width: unset;
+  }
+  .auth-offer-signup  {
+    display: block;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-title {
+    margin-bottom: 28px;
+  }
+  .auth-inputs {
+    margin-bottom: 28px;
+  }
+  .auth-input:not(:last-child) {
+    margin-bottom: 16px;
+  }
+  .auth-offer {
+    flex-direction: column-reverse;
+  }
+  .auth-button-container {
+    width: 100%;
+  }
+  .auth-offer-signup {
+    margin-top: 12px;
+  }
+  .auth-offer-signin {
+    margin-top: 20px;
+  }
 }
 </style>
