@@ -66,6 +66,7 @@ export default {
 .note-card {
   max-width: 506px;
   box-shadow: 0px 15px 15px -10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 .note-header {
   display: flex;
