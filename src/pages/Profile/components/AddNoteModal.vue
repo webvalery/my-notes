@@ -8,7 +8,7 @@
           v-model="title"
           label="Название заметки"
           placeholder="Введите название"
-          :max-length="100"
+          :max-length="64"
         />
       </div>
 
@@ -17,7 +17,7 @@
           v-model="content"
           label="Текст заметки"
           placeholder="Введите текст"
-          :max-length="500"
+          :max-length="250"
         />
       </div>
 
