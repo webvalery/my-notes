@@ -1,4 +1,4 @@
-const API_URL = process.env.VUE_APP_API_URL
+import { authUserApi, logoutUserApi } from 'api/user'
 
 const state = {
   userInfo: {
@@ -34,51 +34,30 @@ const actions = {
   async authUser ({ commit }, { type, authData }) {
     commit('SET_ERROR_MESSAGE', null)
 
-    const url = type === 'signup' ? `${API_URL}/api/reg` : `${API_URL}/api/auth`
+    const { data, status } = await authUserApi(type, authData)
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...authData
-        })
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        commit('SET_ERROR_MESSAGE', data.message)
-      }
-
-      if (data.accessToken) {
-        localStorage.setItem('userToken', JSON.stringify({ token: data.accessToken }))
-        commit('SET_USER_INFO', data.accessToken)
-      }
-
-      return { data, status: response.ok }
-    } catch (error) {
-      commit('SET_ERROR_MESSAGE', 'Произошла непредвиденная ошибка')
+    if (!status) {
+      commit('SET_ERROR_MESSAGE', data.message)
+      return status
     }
+
+    if (data.accessToken) {
+      localStorage.setItem('userToken', JSON.stringify({ token: data.accessToken }))
+      commit('SET_USER_INFO', data.accessToken)
+    }
+
+    return { data, status }
   },
-  async loadUserData ({ commit, getters }) {
-    try {
-      const response = await fetch(`${API_URL}/api/auth`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getters.token}`
-        }
-      })
+  async logout ({ getters, commit }) {
+    const { status } = await logoutUserApi(getters.token)
 
-      const data = await response.json()
-
-      return { data, status: response.ok }
-    } catch (error) {
-      commit('SET_ERROR_MESSAGE', 'Произошла непредвиденная ошибка')
+    if (!status) {
+      return status
     }
+
+    commit('SET_CLEAR_DATA')
+
+    return { status }
   }
 }
 

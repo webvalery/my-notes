@@ -85,6 +85,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 0 40px;
   background-color: rgba(@dark, 0.7);
   display: flex;
   align-items: center;
@@ -97,7 +98,7 @@ export default {
   position: relative;
   padding: 80px;
   background: @dark-middle;
-  border-radius: 40px;
+  clip-path: inset(0 round 40px);
   z-index: 1001;
   max-height: 100%;
   overflow-y: auto;
@@ -125,10 +126,12 @@ export default {
     padding: 56px;
   }
 }
-
-@media (max-width: 360px) {
+@media (max-width: 530px) {
+  .app-modal-overlay {
+    padding: 0;
+  }
   .app-modal {
-    padding: 90px 16px;
+    padding: 42px 16px;
   }
   .app-modal-close {
     top: 12px;

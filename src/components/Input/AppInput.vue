@@ -16,8 +16,15 @@
         @input="handleInputChange"
       >
 
-      <div v-if="isInputTypePassword" class="app-input-icon" @click="handleTogglePassword">
-        <app-icon :name="iconInputPassword" width="18" height="14"/>
+      <div v-if="isInputTypePassword" class="app-input-icon">
+        <app-icon
+          width="18"
+          height="14"
+          :name="iconInputPassword"
+          :aria-label="isHiddenPassword ? 'Показать пароль' : 'Скрыть пароль'"
+          @click="handleTogglePassword"
+          @keydown="handleKeydownTogglePassword"
+        />
       </div>
     </div>
 
@@ -68,6 +75,12 @@ export default {
   methods: {
     handleTogglePassword (e) {
       this.isHiddenPassword = !this.isHiddenPassword
+    },
+    handleKeydownTogglePassword (e) {
+      if (e.key === 'Enter' || e.code === 'Space') {
+        e.preventDefault()
+        this.handleTogglePassword(e)
+      }
     }
   }
 }

@@ -20,8 +20,7 @@
 <script>
 import RootLayout from 'layouts/RootLayout.vue'
 import AppMenu from 'modules/Menu/AppMenu.vue'
-
-import AuthModal from './components/AuthModal.vue'
+import AuthModal from 'modules/AuthModal/AuthModal.vue'
 
 export default {
   components: {
@@ -91,13 +90,6 @@ export default {
   }
   .home-demo {
     background-position: center bottom;
-  }
-}
-
-@media (max-width: 520px) {
-  .home-title {
-    font-size: 60px;
-    line-height: 64px;
   }
 }
 </style>

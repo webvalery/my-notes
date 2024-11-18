@@ -1,51 +1,55 @@
-// Функция для отправки запроса на авторизацию
-export async function login (email, password) {
+const API_URL = process.env.VUE_APP_API_URL
+
+export async function authUserApi (type, authData) {
+  const url = type === 'signup' ? `${API_URL}/api/reg` : `${API_URL}/api/auth`
+
   try {
-    const response = await fetch('https://dist.nd.ru/api/auth', {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email,
-        password
-      })
+      body: JSON.stringify({ ...authData })
     })
 
     const data = await response.json()
 
-    if (!response.ok) {
-      // Если есть ошибка, возвращаем её
-      throw new Error(data.message || 'Произошла ошибка')
-    }
-
-    // Возвращаем токен, если авторизация успешна
-    return data.token
+    return { data, status: response.ok }
   } catch (error) {
-    // Обработка ошибки
-    throw new Error(error.message || 'Не удалось выполнить запрос')
+    return { data: null, status: false }
   }
 }
 
-// Функция для получения данных с защищённого ресурса
-export async function fetchProtectedData (token) {
+export async function logoutUserApi (token) {
   try {
-    const response = await fetch('/api/protected-endpoint', {
-      method: 'GET',
+    const response = await fetch(`${API_URL}/api/auth`, {
+      method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token}` // Добавляем токен в заголовок
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       }
     })
 
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.message || 'Ошибка доступа')
-    }
-
-    // Возвращаем данные с защищённого ресурса
-    return await response.json()
+    return { status: response.ok }
   } catch (error) {
-    // Обработка ошибки
-    throw new Error(error.message || 'Не удалось получить доступ к защищённому ресурсу')
+    return { status: false }
+  }
+}
+
+export async function loadUserInfoApi (token) {
+  try {
+    const response = await fetch(`${API_URL}/api/auth`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    const data = await response.json()
+
+    return { data, status: response.ok }
+  } catch (error) {
+    return { data: null, status: false }
   }
 }

@@ -2,8 +2,12 @@
   <button
     class="app-button"
     :class="classes"
-    @click="handleClick"
     :style="styles"
+    :aria-disabled="disabled ? 'true' : 'false'"
+    :disabled="disabled"
+    :tabindex="disabled ? -1 : 0"
+    @click="handleClick"
+    @keydown="handleKeydown"
   >
     <slot></slot>
   </button>
@@ -53,6 +57,12 @@ export default {
       if (!this.disabled) {
         this.$emit('click', e)
       }
+    },
+    handleKeydown (e) {
+      if (!this.disabled && (e.key === 'Enter' || e.code === 'Space')) {
+        e.preventDefault()
+        this.handleClick(e)
+      }
     }
   }
 }
@@ -67,7 +77,6 @@ export default {
   justify-content: center;
   background-color: @green-light;
   border: none;
-  outline: none;
   padding: 12px 24px;
   border-radius: 32px;
   cursor: pointer;
@@ -101,6 +110,21 @@ export default {
   }
   &.block {
     width: 100%;
+  }
+}
+
+@media (max-width: 1366px) {
+  .app-button {
+    &.fixed {
+      right: 12px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .app-button {
+    &.fixed {
+      right: 8px;
+    }
   }
 }
 </style>

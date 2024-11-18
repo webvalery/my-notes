@@ -8,14 +8,14 @@ module.exports = defineConfig({
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
+        api: path.resolve(__dirname, 'src/api'),
         assets: path.resolve(__dirname, 'src/assets'),
         styles: path.resolve(__dirname, 'src/assets/styles'),
         components: path.resolve(__dirname, 'src/components'),
         layouts: path.resolve(__dirname, 'src/layouts'),
-        api: path.resolve(__dirname, 'src/api'),
+        modules: path.resolve(__dirname, 'src/modules'),
         pages: path.resolve(__dirname, 'src/pages'),
-        utils: path.resolve(__dirname, 'src/utils'),
-        modules: path.resolve(__dirname, 'src/modules')
+        utils: path.resolve(__dirname, 'src/utils')
       }
     }
   },

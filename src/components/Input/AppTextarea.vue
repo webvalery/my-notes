@@ -31,11 +31,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import 'styles/colors.less';
 @import './input';
 
 .app-textarea-root {
+  display: block;
   height: 244px;
   padding: 14px 26px;
   resize: none;
+}
+
+@media (max-width: 1366px) {
+  .app-textarea-root {
+    height: 168px;
+  }
 }
 </style>

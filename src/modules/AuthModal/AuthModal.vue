@@ -109,7 +109,7 @@ export default {
       return this.message !== null && this.message.trim() !== ''
     },
     isWidthWindowSmall () {
-      return this.windowSize.width <= 360
+      return this.windowSize.width <= 530
     }
   },
   watch: {
@@ -132,25 +132,23 @@ export default {
     async handleClickAuth (e) {
       const type = this.isSignIn ? 'signin' : 'signup'
 
-      try {
-        const data = await this.$store.dispatch('auth/authUser', {
-          type,
-          authData: {
-            email: this.email,
-            password: this.password,
-            confirm_password: this.confirmPassword
-          }
-        })
-
-        if (data.status) {
-          this.shown = false
-          this.$router.push({ path: '/user' })
+      const { status } = await this.$store.dispatch('auth/authUser', {
+        type,
+        authData: {
+          email: this.email,
+          password: this.password,
+          confirm_password: this.confirmPassword
         }
-      } finally {
-        this.email = null
-        this.password = null
-        this.confirmPassword = null
+      })
+
+      if (status) {
+        this.shown = false
+        this.$router.push({ path: '/user' })
       }
+
+      this.email = null
+      this.password = null
+      this.confirmPassword = null
     }
   }
 }
@@ -189,10 +187,9 @@ export default {
   }
   .auth-offer-signup {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
   }
 }
-
 @media (max-width: 768px) {
   .auth-title {
     max-width: unset;
@@ -201,9 +198,10 @@ export default {
     display: block;
   }
 }
-
-@media (max-width: 360px) {
+@media (max-width: 530px) {
   .auth-title {
+    font-size: 32px;
+    line-height: 36px;
     margin-bottom: 28px;
   }
   .auth-inputs {
@@ -219,10 +217,18 @@ export default {
     width: 100%;
   }
   .auth-offer-signup {
+    text-align: center;
+    font-size: 14px;
+    line-height: 24px;
     margin-top: 12px;
   }
   .auth-offer-signin {
     margin-top: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .auth-offer-signup {
+    text-align: unset;
   }
 }
 </style>

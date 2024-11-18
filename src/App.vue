@@ -74,20 +74,21 @@ input, label, textarea {
     max-width: 1226px;
   }
 }
-
 @media (max-width: 768px) {
   .container {
     max-width: 708px;
   }
 }
-
-@media (max-width: 360px) {
-  .container {
-    max-width: 340px;
-  }
+@media (max-width: 530px) {
   h1 {
     font-size: 60px;
     line-height: 64px;
+  }
+}
+@media (max-width: 360px) {
+  body {
+    font-size: 16px;
+    line-height: 24px;
   }
   h2 {
     font-size: 32px;
@@ -96,6 +97,9 @@ input, label, textarea {
   h3 {
     font-size: 24px;
     line-height: 36px;
+  }
+  .container {
+    max-width: 340px;
   }
   .text-small {
     font-size: 14px;

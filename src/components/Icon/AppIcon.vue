@@ -1,9 +1,14 @@
 <template>
   <div
+    v-html="getSvgIcon(name)"
     class="svg-icon"
     :style="stylesBuild"
-    v-html="getSvgIcon(name)"
+    :aria-pressed="ariaPressed"
+    :aria-label="ariaLabel"
+    role="icon"
+    tabindex="0"
     @click="handleClick"
+    @keydown="handleKeydown"
   />
 </template>
 
@@ -27,6 +32,18 @@ export default {
     height: {
       type: String,
       default: 'auto'
+    },
+    title: {
+      type: String,
+      default: 'Иконка'
+    },
+    ariaPressed: {
+      type: Boolean,
+      default: false
+    },
+    ariaLabel: {
+      type: String,
+      default: null
     }
   },
   data () {
@@ -45,6 +62,12 @@ export default {
   methods: {
     handleClick (e) {
       this.$emit('click', e)
+    },
+    handleKeydown (e) {
+      if (e.key === 'Enter' || e.code === 'Space') {
+        e.preventDefault()
+        this.handleClick(e)
+      }
     }
   }
 }

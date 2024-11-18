@@ -5,7 +5,7 @@
 
       <div class="note-name">
         <app-input
-          v-model="name"
+          v-model="title"
           label="Название заметки"
           placeholder="Введите название"
           :max-length="100"
@@ -22,15 +22,22 @@
       </div>
 
       <div class="note-add">
-        <app-button @click="handleClickAdd">Добавить</app-button>
+        <app-button
+          :block="isWidthWindowSmall"
+          @click="handleClickAdd"
+        >
+          Добавить
+        </app-button>
       </div>
 
-      <p v-if="isError" class="add-note-error" v-html="message" />
+      <p v-if="message" class="add-note-error" v-html="message" />
     </div>
   </app-modal>
 </template>
 
 <script>
+import windowSize from 'utils/windowSize'
+
 import AppModal from 'components/Modal/AppModal.vue'
 import AppInput from 'components/Input/AppInput.vue'
 import AppTextarea from 'components/Input/AppTextarea.vue'
@@ -47,6 +54,10 @@ export default {
     value: {
       type: Boolean,
       default: false
+    },
+    message: {
+      type: String,
+      default: null
     }
   },
   watch: {
@@ -54,6 +65,11 @@ export default {
       immediate: true,
       handler (val) {
         this.shown = val
+
+        if (!val) {
+          this.title = null
+          this.content = null
+        }
       }
     },
     shown (val) {
@@ -64,21 +80,22 @@ export default {
   data () {
     return {
       shown: false,
-      name: null,
-      content: null
+      title: null,
+      content: null,
+      windowSize: windowSize
     }
   },
   computed: {
-    message () {
-      return this.$store.getters['auth/error']
-    },
-    isError () {
-      return this.message !== null && this.message.trim() !== ''
+    isWidthWindowSmall () {
+      return this.windowSize.width <= 530
     }
   },
   methods: {
     async handleClickAdd (e) {
-      console.log(this.name, this.content)
+      this.$emit('send-note', {
+        title: this.title,
+        content: this.content
+      })
     }
   }
 }
@@ -100,12 +117,34 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 20px;
 }
 .add-note-error {
   color: #FF7461;
   background-color: #FF74611A;
   padding: 8px 20px;
+  margin-top: 20px;
   border-radius: 24px;
+}
+
+@media (max-width: 1366px) {
+  .note-title {
+    max-width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .note-title {
+    max-width: unset;
+  }
+}
+@media (max-width: 360px) {
+  .note-title {
+    margin-bottom: 28px;
+  }
+  .note-name {
+    margin-bottom: 16px;
+  }
+  .note-content {
+    margin-bottom: 28px;
+  }
 }
 </style>

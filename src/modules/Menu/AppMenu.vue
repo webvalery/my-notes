@@ -9,7 +9,7 @@
     <div class="actions">
       <slot name="actions"></slot>
 
-      <app-button v-if="!isAuth" @click="handleClickLogin">
+      <app-button v-if="!token" @click="handleClickLogin">
         <div class="login-icon">
           <app-icon name="login" size="32"/>
         </div>
@@ -42,6 +42,7 @@
 <script>
 import windowSize from 'utils/windowSize.js'
 import { COLORS } from 'styles/colors.js'
+import { loadUserInfoApi } from 'api/user'
 
 import AppIcon from 'components/Icon/AppIcon.vue'
 import AppButton from 'components/Button/AppButton.vue'
@@ -54,7 +55,9 @@ export default {
     AppLink
   },
   async created () {
-    this.getUserInfo()
+    if (this.token) {
+      await this.getUserInfo()
+    }
   },
   data () {
     return {
@@ -75,7 +78,7 @@ export default {
     heightIconUser () {
       return !this.isWidthWindowSmall ? '28' : '18'
     },
-    isAuth () {
+    token () {
       return this.$store.getters['auth/token']
     },
     isWidthWindowSmall () {
@@ -84,14 +87,10 @@ export default {
   },
   methods: {
     async getUserInfo () {
-      try {
-        const { data, status } = await this.$store.dispatch('auth/loadUserData')
+      const { data, status } = await loadUserInfoApi(this.token)
 
-        if (status) {
-          this.email = data.email
-        }
-      } catch (error) {
-        throw new Error('Не удалось получить данные пользователя')
+      if (status) {
+        this.email = data.email
       }
     },
     handleClickLogo (e) {
@@ -120,8 +119,8 @@ export default {
         document.removeEventListener('click', this.handleClickOutside)
       }
     },
-    handleClickExit (e) {
-      this.$store.commit('auth/SET_CLEAR_DATA')
+    async handleClickExit (e) {
+      await this.$store.dispatch('auth/logout')
       this.$router.push({ path: '/' })
     }
   }
@@ -181,6 +180,7 @@ export default {
   position: absolute;
   top: calc(100% + 28px);
   left: 100%;
+  z-index: 2;
   display: none;
   transform: translateX(-100%);
   background-color: @dark-middle;
@@ -202,6 +202,7 @@ export default {
   display: block;
 }
 .user-profile-exit {
+  display: flex;
   pointer-events: all;
   user-select: none;
 }
@@ -211,13 +212,11 @@ export default {
     height: var(--height-app-menu, 96px);
   }
 }
-
 @media (max-width: 768px) {
   .user-profile-dropdown {
     padding: 20px;
   }
 }
-
 @media (max-width: 360px) {
   .logo {
     width: 154px;
