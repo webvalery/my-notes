@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import windowSize from 'utils/windowSize.js'
-import { COLORS } from 'styles/colors.js'
 import { loadUserInfoApi } from 'api/user'
+import { COLORS } from 'styles/colors.js'
+import windowSize from 'utils/windowSize.js'
 
 import AppIcon from 'components/Icon/AppIcon.vue'
 import AppButton from 'components/Button/AppButton.vue'

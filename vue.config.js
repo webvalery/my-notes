@@ -12,6 +12,7 @@ module.exports = defineConfig({
         assets: path.resolve(__dirname, 'src/assets'),
         styles: path.resolve(__dirname, 'src/assets/styles'),
         components: path.resolve(__dirname, 'src/components'),
+        mixins: path.resolve(__dirname, 'src/mixins'),
         layouts: path.resolve(__dirname, 'src/layouts'),
         modules: path.resolve(__dirname, 'src/modules'),
         pages: path.resolve(__dirname, 'src/pages'),

@@ -21,6 +21,7 @@
           width="18"
           height="14"
           :name="iconInputPassword"
+          tabindex="0"
           :aria-label="isHiddenPassword ? 'Показать пароль' : 'Скрыть пароль'"
           @click="handleTogglePassword"
           @keydown="handleKeydownTogglePassword"
@@ -30,7 +31,10 @@
 
     <div v-if="hasInputInfo" class="app-input-info">
       <span v-if="error" class="app-input-message">{{ message }}</span>
-      <span v-if="hasMaxLength" class="app-input-char-counter text-small"> {{ currentLength }} / {{ maxLength }}</span>
+
+      <span v-if="hasMaxLength" class="app-input-char-counter text-small">
+        {{ currentLength }} / {{ maxLength }}
+      </span>
     </div>
   </div>
 </template>

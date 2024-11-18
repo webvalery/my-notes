@@ -7,7 +7,10 @@
     <section class="home-content">
       <div class="home-info">
         <h1 class="home-title">Мои заметки</h1>
-        <h3 class="home-description">Не забывай о важном, храни его в облаке.</h3>
+
+        <h3 class="home-description">
+          Не забывай о важном, храни его в облаке.
+        </h3>
       </div>
 
       <div class="home-demo"></div>

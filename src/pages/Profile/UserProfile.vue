@@ -29,7 +29,11 @@
           </note-card>
         </div>
 
-        <app-button rounded fixed @click="handleClickNoteAdd">
+        <app-button
+          rounded fixed
+          aria-label="Добавить новую заметку"
+          @click="handleClickNoteAdd"
+        >
           <app-icon name="add" size="16"/>
         </app-button>
       </section>

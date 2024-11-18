@@ -3,9 +3,7 @@
     class="app-button"
     :class="classes"
     :style="styles"
-    :aria-disabled="disabled ? 'true' : 'false'"
     :disabled="disabled"
-    :tabindex="disabled ? -1 : 0"
     @click="handleClick"
     @keydown="handleKeydown"
   >

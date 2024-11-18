@@ -3,10 +3,6 @@
     v-html="getSvgIcon(name)"
     class="svg-icon"
     :style="stylesBuild"
-    :aria-pressed="ariaPressed"
-    :aria-label="ariaLabel"
-    role="icon"
-    tabindex="0"
     @click="handleClick"
     @keydown="handleKeydown"
   />
@@ -32,18 +28,6 @@ export default {
     height: {
       type: String,
       default: 'auto'
-    },
-    title: {
-      type: String,
-      default: 'Иконка'
-    },
-    ariaPressed: {
-      type: Boolean,
-      default: false
-    },
-    ariaLabel: {
-      type: String,
-      default: null
     }
   },
   data () {

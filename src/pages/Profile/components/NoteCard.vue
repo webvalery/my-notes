@@ -99,7 +99,6 @@ export default {
     border-top: 40px solid transparent;
     border-left: 40px solid transparent;
   }
-
   &::before {
     content: '';
     position: absolute;

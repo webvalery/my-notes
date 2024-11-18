@@ -34,14 +34,22 @@
       <div class="auth-offer">
         <span v-if="isSignIn" class="auth-offer-signup text text-small">
           У вас нет аккаунта?
-          <app-link @click="handleClickLink">
+          <app-link
+            tabindex="0"
+            role="button"
+            @click="handleClickLink"
+          >
             Зарегистрируйтесь
           </app-link>
         </span>
 
         <span v-else class="auth-offer-signin text text-small">
           У вас есть аккаунт?
-          <app-link @click="handleClickLink">
+          <app-link
+            tabindex="0"
+            role="button"
+            @click="handleClickLink"
+          >
             Войдите
           </app-link>
         </span>
@@ -49,6 +57,7 @@
         <div class="auth-button-container">
           <app-button
             :block="isWidthWindowSmall"
+            role="button"
             @click="handleClickAuth"
           >
             {{ isSignIn ? 'Войти' : 'Зарегистрироваться'}}

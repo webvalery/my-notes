@@ -4,6 +4,7 @@
     :href="url"
     :target="newWindow ? '_blank' : '_self'"
     @click="handleClickLink"
+    @keydown="handleKeydown"
   >
     <slot></slot>
   </a>
@@ -42,6 +43,12 @@ export default {
       }
 
       this.$emit('click', e)
+    },
+    handleKeydown (e) {
+      if (!this.disabled && (e.key === 'Enter' || e.code === 'Space')) {
+        e.preventDefault()
+        this.handleClickLink(e)
+      }
     }
   }
 }

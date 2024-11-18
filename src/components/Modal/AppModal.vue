@@ -6,7 +6,12 @@
       </div>
 
       <div class="app-modal-close">
-        <app-button rounded @click="closeModal">
+        <app-button
+          rounded
+          aria-label="Закрыть модальное окно"
+          role="button"
+          @click="closeModal"
+        >
           <app-icon name="close" size="16"/>
         </app-button>
       </div>
