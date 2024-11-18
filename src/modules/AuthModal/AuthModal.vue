@@ -138,23 +138,33 @@ export default {
       this.$store.commit('auth/SET_ERROR_MESSAGE', null)
       this.isSignIn = !this.isSignIn
     },
-    async handleClickAuth (e) {
-      const type = this.isSignIn ? 'signin' : 'signup'
 
-      const { status } = await this.$store.dispatch('auth/authUser', {
-        type,
-        authData: {
-          email: this.email,
-          password: this.password,
-          confirm_password: this.confirmPassword
-        }
-      })
+    async handleClickAuth () {
+      const authData = {
+        email: this.email,
+        password: this.password,
+        ...(this.isSignIn ? {} : { confirm_password: this.confirmPassword })
+      }
+
+      const authType = this.isSignIn ? 'signin' : 'signup'
+
+      const { status } = await this.authenticate(authType, authData)
+
+      if (status && authType === 'signup') {
+        await this.authenticate('signin', authData)
+      }
 
       if (status) {
         this.shown = false
         this.$router.push({ path: '/user' })
       }
 
+      this.clearAuthData()
+    },
+    async authenticate (type, authData) {
+      return this.$store.dispatch('auth/authUser', { type, authData })
+    },
+    clearAuthData () {
       this.email = null
       this.password = null
       this.confirmPassword = null
